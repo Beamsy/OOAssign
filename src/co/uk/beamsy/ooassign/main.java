@@ -9,10 +9,7 @@ import co.uk.beamsy.ooassign.stack.Stack;
 public class main {
 
     public static void main(String[] args) {
-        Stack s1 = new Stack(5);
-        s1.push(10);
-        s1.push(20);
-        s1.push(30);
-        s1.rot();
+        Factorial f1 = new Factorial(20, Factorial.METHOD_RECURSIVE);
+        System.out.println(f1.getFactorialValueAsString());
     }
 }

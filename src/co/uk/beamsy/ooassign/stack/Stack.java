@@ -129,4 +129,14 @@ public class Stack {
         push(data[topOfStack-1]);
     }
 
+    public void mod () throws IndexOutOfBoundsException {
+        if (topOfStack <= 1) {
+            throw new IndexOutOfBoundsException("There must be at least two items in the stack to perform this" +
+                    " operation");
+        }
+        int a = pop();
+        int b = pop();
+        push(a % b);
+    }
+
 }
