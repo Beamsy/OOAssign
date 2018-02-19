@@ -8,7 +8,7 @@ public class String {
     }
 
     public String() {
-        this.contents = new char[1];
+        this.contents = new char[0];
     }
 
     public void addChar(char _char) {
@@ -79,21 +79,49 @@ public class String {
                 if (contents.length > i+oldChars.length) {
                     after = getSubString(i+(oldChars.length)+1, contents.length).getContents();
                 }
-                char[] newContents = new char[before.length+newChars.length+after.length];
-                for (int j = 0; j < before.length; j++) {
-                    newContents[j] = before[j];
-                }
-                for (int j = before.length, k = 0; j < before.length + newChars.length; j++, k++) {
-                    newContents[j] = newChars[k];
-                }
-                for (int j = before.length + newChars.length, k = 0;
-                     j < before.length + newChars.length + after.length; j++, k++) {
-                    newContents[j] = after[k];
-                }
-                contents = newContents;
+                String newContents = new String(before);
+                newContents.append(newChars);
+                newContents.append(after);
+                contents = newContents.getContents();
                 i += newChars.length;
             }
         }
+    }
+
+    public int search(char[] term) {
+        stringiterator: for (int i = 0; i < contents.length; i++) {
+            if (contents[i] == term[0]) {
+                for (int j = 0; j < term.length; j++) {
+                    if (contents[i + j] != term[j]) continue stringiterator;
+                }
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public int search(char term) {
+        for (int i = 0; i < contents.length; i++) {
+            if (contents[i] == term) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public void append(char[] toAdd) {
+        char[] _contents = new char[contents.length + toAdd.length];
+        for (int i = 0; i < contents.length; i++) {
+            _contents[i] = contents[i];
+        }
+        for (int i = contents.length, j = 0; i < _contents.length; i++, j++) {
+            _contents[i] = toAdd[j];
+        }
+        contents = _contents;
+    }
+
+    public boolean isEmpty() {
+        return contents.length == 0;
     }
 
     //Override Object.toString() for easier System.out.println() implementation

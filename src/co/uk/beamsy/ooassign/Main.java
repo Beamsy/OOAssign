@@ -7,7 +7,7 @@ import co.uk.beamsy.ooassign.string.String;
 /**
  * Created by Jake on 10/02/2018.
  */
-public class main {
+public class Main {
 
     public static void main(java.lang.String[] args) {
         Factorial f1 = new Factorial(20, Factorial.METHOD_RECURSIVE);

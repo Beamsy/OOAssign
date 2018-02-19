@@ -1,6 +1,5 @@
 package co.uk.beamsy.ooassign.factorial;
 
-import java.math.BigInteger;
 
 public class Factorial {
 
@@ -131,7 +130,7 @@ public class Factorial {
     }
 
     private byte[] numberToByte (long _long) {
-        byte subtractor = 48;
+        byte subtractor = 48; //Magic number converts ascii representation of digit characters to binary representation.
         String factS = String.valueOf(_long);
         byte[] bytes = (new StringBuilder(factS)).reverse().toString().getBytes();
         //It was not appropriate to use a for-each loop here due to the inability to change elements of the array
