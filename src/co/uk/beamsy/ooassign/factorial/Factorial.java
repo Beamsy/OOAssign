@@ -3,6 +3,7 @@ package co.uk.beamsy.ooassign.factorial;
 
 public class Factorial {
 
+    private int factorialOf;
     private byte[] factorialValue;
     private String factorialValueString;
     public static final int METHOD_ITERATIVE = 0;
@@ -25,6 +26,7 @@ public class Factorial {
         } else {
             throw new IllegalArgumentException("Must use METHOD_ITERATIVE or METHOD_RECURSIVE");
         }
+        this.factorialOf = fact;
     }
 
     public byte[] getFactorialValueAsByteArray () {
@@ -140,5 +142,8 @@ public class Factorial {
         return bytes;
     }
     
+    public int factorialOf () {
+        return factorialOf;
+    }
 
 }
