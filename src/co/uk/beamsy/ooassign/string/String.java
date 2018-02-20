@@ -66,7 +66,8 @@ public class String {
     }
 
     public void replace (char[] oldChars, char[] newChars) {
-        stringiterator: for (int i = 0; i < contents.length; i++) {
+        stringiterator:
+        for (int i = 0; i < contents.length; i++) {
             if (contents[i] == oldChars[0]) {
                 for (int j = 0; j < oldChars.length; j++) {
                     if (contents[i+j] != oldChars[j]) continue stringiterator;
@@ -122,6 +123,14 @@ public class String {
 
     public boolean isEmpty() {
         return contents.length == 0;
+    }
+    
+    public void reverse() {
+    	char[] _contents = new char[contents.length];
+    	for (int i = contents.length-1, j = 0; i >= 0; i--, j++) {
+    		_contents[j] = contents[i];
+    	}
+    	contents = _contents;
     }
 
     //Override Object.toString() for easier System.out.println() implementation

@@ -3,6 +3,7 @@ package co.uk.beamsy.ooassign.factorial;
 
 public class Factorial {
 
+	private boolean leadingStripped;
     private int factorialOf;
     private byte[] factorialValue;
     private String factorialValueString;
@@ -22,7 +23,7 @@ public class Factorial {
             if (fact < 21) {
                 this.factorialValue = numberToByte(recursive(fact));
             }
-            this.factorialValue = iterativeByte(fact);
+            this.factorialValue = recursiveByte(fact);
         } else {
             throw new IllegalArgumentException("Must use METHOD_ITERATIVE or METHOD_RECURSIVE");
         }
@@ -30,11 +31,17 @@ public class Factorial {
     }
 
     public byte[] getFactorialValueAsByteArray () {
+    	if (!leadingStripped) {
+    		stripLeading();
+    	}
         return factorialValue;
     }
 
     public String getFactorialValueAsString () {
         if (factorialValueString == null) {
+        	if (!leadingStripped) {
+        		stripLeading();
+        	}
             String returnVal = "";
             for(int i = factorialValue.length - 1; i >= 0; i--) {
                 returnVal = returnVal+Character.forDigit(factorialValue[i], Character.MAX_RADIX);
@@ -42,6 +49,20 @@ public class Factorial {
             this.factorialValueString = returnVal;
         }
         return factorialValueString;
+    }
+    
+    private void stripLeading () {
+    	int start = 0;
+        for (int i = factorialValue.length - 1; i > 0; i--) {
+            if (factorialValue[i] !=0) {
+                break;
+            }
+            start++;
+        }
+        byte[] _factorialValue = new byte[factorialValue.length-start];
+        System.arraycopy(factorialValue, 0, _factorialValue, 0, factorialValue.length-start);
+        factorialValue = _factorialValue;
+        leadingStripped = true;
     }
 
     private long iterative (int fact) throws IllegalArgumentException {
@@ -111,23 +132,14 @@ public class Factorial {
             byte[] multiplier = numberToByte(fact);
             sum = multiplyByteArrays(sum, multiplier);
         }
-        int start = 0;
-        for (int i = sum.length - 1; i > 0; i--) {
-            if (sum[i] !=0) {
-                break;
-            }
-            start++;
-        }
-        byte[] _sum = new byte[sum.length-start];
-        System.arraycopy(sum, 0, _sum, 0, sum.length-start);
-        return _sum;
+        return sum;
     }
 
     private byte[] recursiveByte (int fact) {
         if (fact > 1) {
-            return multiplyByteArrays(numberToByte(fact), recursiveByte(fact-1));
+            return multiplyByteArrays(recursiveByte(fact-1), numberToByte(fact));
         } else {
-            return new byte[]{1};
+            return new byte[]{1, 0};
         }
     }
 

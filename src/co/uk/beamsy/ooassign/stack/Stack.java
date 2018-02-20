@@ -136,7 +136,7 @@ public class Stack {
         }
         int a = pop();
         int b = pop();
-        push(a % b);
+        push(b % a);
     }
 
 }
