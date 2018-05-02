@@ -1,62 +1,60 @@
-package co.uk.beamsy.ooassign.string;
+package co.uk.beamsy.ooassign;
 
-public class String {
-    private char[] contents;
+import co.uk.beamsy.ooassign.utils.List;
+import co.uk.beamsy.ooassign.utils.PrimativeConvertor;
 
-    public String(char[] contents) {
-        this.contents = contents;
+public class StringOld {
+    private List<Character> contentsList;
+
+    public StringOld(char[] contents) {
+        contentsList = contentsList.fromArray(PrimativeConvertor.CharArrToCharacterArr(contents));
     }
 
-    public String() {
-        this.contents = new char[0];
+    public StringOld(List<Character> charList) {
+        this.contentsList = charList;
+    }
+
+    public StringOld() {
+        this.contentsList = new List<>();
+    }
+
+    public StringOld(java.lang.String string) {
+        contentsList = contentsList.fromArray(PrimativeConvertor.CharArrToCharacterArr(string.toCharArray()));
     }
 
     public void addChar(char _char) {
-        char[] newArr = new char[contents.length+1];
-        for (int i = 0; i < contents.length; i++) {
-            newArr[i] = contents[i];
-        }
-        newArr[contents.length - 1] = _char;
-        contents = newArr;
+        contentsList.addItem(_char);
     }
 
-    public char[] getContents() {
-        return contents;
+    public Character[] getContents() {
+        return contentsList.toArray(Character.class);
     }
 
-    public char getChar(int i) throws IndexOutOfBoundsException{
-        if (i > contents.length-1 || i < 0) throw new IndexOutOfBoundsException();
-        return contents[i];
+    public Character getChar(int i) throws IndexOutOfBoundsException{ //Gets character at index i
+        if (i > contentsList.getCount()-1 || i < 0) throw new IndexOutOfBoundsException(); //Checks i is in range of array
+        return contentsList.get(i); //Returns character
     }
 
-    public String getSubString(int end) {
-        end--;
-        if (end > contents.length || end < 0) throw new IndexOutOfBoundsException();
-        char[] sub = new char[end+1];
-        for (int i = 0; i <= end; i++) {
-            sub[i] = contents[i];
-        }
-        return new String(sub);
+    public StringOld getSubString(int end) {
+        return getSubString(0 , end);
     }
 
-    public String getSubString (int start, int end) {
-        end--;
-        start--;
-        if (end > contents.length ||
+    public StringOld getSubString (int start, int end) {
+        if (end > contentsList.getCount() ||
                 end < 0 ||
                 start > end ||
                 start < 0 ||
-                start > contents.length)
+                start > contentsList.getCount())
             throw new IndexOutOfBoundsException();
-        char[] sub = new char[(end-start)+1];
-        for (int i = start, j = 0; i <= end; i++, j++) {
-            sub[j] = contents[i];
+        List<Character> sub = new List<>();
+        for (int i = ++start; i < end; i++) {
+            sub.addItem(contentsList.get(i));
         }
-        return new String(sub);
+        return new StringOld(sub);
     }
 
     public int length () {
-        return contents.length;
+        return contentsList.getCount();
     }
 
     public void replace (char oldChar, char newChar) {
@@ -80,7 +78,7 @@ public class String {
                 if (contents.length > i+oldChars.length) {
                     after = getSubString(i+(oldChars.length)+1, contents.length).getContents();
                 }
-                String newContents = new String(before);
+                StringOld newContents = new StringOld(before);
                 newContents.append(newChars);
                 newContents.append(after);
                 contents = newContents.getContents();
